@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: rydo_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: rydo
+      POSTGRES_PASSWORD: rydo123
+      POSTGRES_DB: rydo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rydonet
+
+volumes:
+  postgres_data:
+
+networks:
+  rydonet:
