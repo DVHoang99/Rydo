@@ -1,5 +1,11 @@
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+/bin/
+/obj/
+/.vs/
+/*.user
+*.suo
+*.user
+*.userosscache
+*.sln.DotSettings.user
+.idea/
+/*.DotSettings.user
+.DS_Store
