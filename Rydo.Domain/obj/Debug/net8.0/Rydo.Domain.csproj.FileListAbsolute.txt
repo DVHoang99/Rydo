@@ -9,3 +9,16 @@
 /Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/obj/Debug/net8.0/refint/Rydo.Domain.dll
 /Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.pdb
 /Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/obj/Debug/net8.0/ref/Rydo.Domain.dll
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/bin/Debug/net8.0/Rydo.Domain.deps.json
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/bin/Debug/net8.0/Rydo.Domain.dll
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/bin/Debug/net8.0/Rydo.Domain.pdb
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.csproj.AssemblyReference.cache
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.AssemblyInfoInputs.cache
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.AssemblyInfo.cs
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.csproj.CoreCompileInputs.cache
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.sourcelink.json
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.dll
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/refint/Rydo.Domain.dll
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/Rydo.Domain.pdb
+/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/Debug/net8.0/ref/Rydo.Domain.dll

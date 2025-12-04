@@ -1,27 +1,50 @@
-using System.Reflection.Metadata;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite;
 using Rydo.Application;
+using Rydo.Application.Common.Interfaces;
 using Rydo.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// MediatR
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
-    // ví dụ thêm pipeline behaviors:
-    // cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 });
-builder.Services.AddDbContext<RydoDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// EF Core + Npgsql + NetTopologySuite
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        x => x.UseNetTopologySuite()
+    )
+);
+
+// JWT Auth + Authorization (PHẢI TRƯỚC builder.Build)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opts =>
+    {
+        opts.Authority = builder.Configuration["Keycloak:Authority"];
+        opts.Audience = "rydo-api";
+        opts.RequireHttpsMetadata = false;
+    });
+builder.Services.AddAuthorization(); // <-- thêm đúng chỗ
+
+// Geometry factory
+builder.Services.AddSingleton(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
+
+// ApplicationDbContext interface
+builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -29,26 +52,29 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();   // bắt buộc phải trước Authorization
+app.UseAuthorization();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
+// Minimal API example
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
+    var summaries = new[]
+    {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+        new WeatherForecast(
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
             Random.Shared.Next(-20, 55),
             summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
+        )).ToArray();
+
     return forecast;
 })
 .WithName("GetWeatherForecast")
-.WithOpenApi();
+.WithOpenApi()
+.RequireAuthorization(); // nếu muốn bắt JWT auth
 
 app.Run();
 

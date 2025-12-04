@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Application/Rydo.Application.csproj": {}
+    "/Users/hoangdao/Documents/Git/Rydo/Rydo.Application/Rydo.Application.csproj": {}
   },
   "projects": {
-    "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Application/Rydo.Application.csproj": {
+    "/Users/hoangdao/Documents/Git/Rydo/Rydo.Application/Rydo.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Application/Rydo.Application.csproj",
+        "projectUniqueName": "/Users/hoangdao/Documents/Git/Rydo/Rydo.Application/Rydo.Application.csproj",
         "projectName": "Rydo.Application",
-        "projectPath": "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Application/Rydo.Application.csproj",
+        "projectPath": "/Users/hoangdao/Documents/Git/Rydo/Rydo.Application/Rydo.Application.csproj",
         "packagesPath": "/Users/hoangdao/.nuget/packages/",
-        "outputPath": "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Application/obj/",
+        "outputPath": "/Users/hoangdao/Documents/Git/Rydo/Rydo.Application/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/Rydo.Domain.csproj": {
-                "projectPath": "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/Rydo.Domain.csproj"
+              "/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/Rydo.Domain.csproj": {
+                "projectPath": "/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/Rydo.Domain.csproj"
               }
             }
           }
@@ -48,6 +48,10 @@
             "MediatR": {
               "target": "Package",
               "version": "[14.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             }
           },
           "imports": [
@@ -70,14 +74,14 @@
         }
       }
     },
-    "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/Rydo.Domain.csproj": {
+    "/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/Rydo.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/Rydo.Domain.csproj",
+        "projectUniqueName": "/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/Rydo.Domain.csproj",
         "projectName": "Rydo.Domain",
-        "projectPath": "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/Rydo.Domain.csproj",
+        "projectPath": "/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/Rydo.Domain.csproj",
         "packagesPath": "/Users/hoangdao/.nuget/packages/",
-        "outputPath": "/Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/obj/",
+        "outputPath": "/Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -106,6 +110,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "NetTopologySuite": {
+              "target": "Package",
+              "version": "[2.6.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Rydo.Domain
-build_property.ProjectDir = /Users/hoangdao/Documents/Projects/Rydo/Rydo.Domain/
+build_property.ProjectDir = /Users/hoangdao/Documents/Git/Rydo/Rydo.Domain/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
