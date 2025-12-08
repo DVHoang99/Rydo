@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Rydo.Application.Common.Enums;
 using Rydo.Application.Common.Helpers;
 using Rydo.Domain.Entities;
 
@@ -16,6 +17,7 @@ public class PaymentDetailConfiguration(CryptoHelper crypto) : IEntityTypeConfig
         builder.Property(x => x.Created)
             .HasDefaultValueSql("NOW()");
         builder.Property(x => x.BookingId).HasMaxLength(50).IsRequired();
+        builder.Property(x => x.Status).HasDefaultValue(PaymentStatus.Pending);
 
         builder.Property(x => x.Detail)
             .HasConversion(new EncryptedDetailConverter(crypto))
