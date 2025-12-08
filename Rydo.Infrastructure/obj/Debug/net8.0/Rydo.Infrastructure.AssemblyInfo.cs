@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rydo.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+58952d8fac5730404674ec1e36cb8bfe249c5508")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b982741ddd49651f7a6ff174e8840175d105c5e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rydo.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rydo.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -8,6 +8,7 @@ using Rydo.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 // Add services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,7 +44,6 @@ builder.Services.AddSingleton(NtsGeometryServices.Instance.CreateGeometryFactory
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
 var app = builder.Build();
-
 // Middleware pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -52,8 +52,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();   // bắt buộc phải trước Authorization
-app.UseAuthorization();
+//app.UseAuthentication();   // bắt buộc phải trước Authorization
+//app.UseAuthorization();
+app.MapControllers();
 
 // Minimal API example
 app.MapGet("/weatherforecast", () =>
