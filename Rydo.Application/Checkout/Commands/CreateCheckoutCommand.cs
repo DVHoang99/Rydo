@@ -6,7 +6,7 @@ using Rydo.Domain.Entities;
 
 namespace Rydo.Application.Checkout.Commands;
 
-public record CreateCheckoutCommand(Guid BookingId) : IRequest<Guid>;
+public record CreateCheckoutCommand(Guid BookingId, CheckoutType CheckoutType, PaymentStatus PaymentStatus) : IRequest<Guid>;
 
 public class CreateCheckoutCommandHandler : IRequestHandler<CreateCheckoutCommand, Guid>
 {
@@ -32,13 +32,6 @@ public class CreateCheckoutCommandHandler : IRequestHandler<CreateCheckoutComman
         decimal discount = 0; // apply logic later
         var totalPrice = (pricePerDay * totalDays) - discount;
 
-        var paymentDetail = new PaymentDetail
-        {
-            Id = Guid.NewGuid(),
-            BookingId = booking.Id,
-            Created = DateTime.UtcNow
-        };
-
         var detail = new Detail
         {
             Id = Guid.NewGuid(),
@@ -47,7 +40,17 @@ public class CreateCheckoutCommandHandler : IRequestHandler<CreateCheckoutComman
             TotalDays = totalDays,
             PricePerDay = pricePerDay,
             Discount = discount,
-            TotalPrice = totalPrice
+            TotalPrice = totalPrice,
+        };
+        
+        var paymentDetail = new PaymentDetail
+        {
+            Id = Guid.NewGuid(),
+            BookingId = booking.Id,
+            Created = DateTime.UtcNow,
+            Status = request.PaymentStatus,
+            CheckoutType = request.CheckoutType,
+            Detail = detail
         };
 
         await _db.PaymentDetails.AddAsync(paymentDetail, cancellationToken);

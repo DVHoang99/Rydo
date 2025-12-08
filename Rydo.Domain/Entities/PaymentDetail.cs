@@ -8,6 +8,7 @@ public class PaymentDetail
     public Guid BookingId { get; set; }
     public DateTime Created { get; set; }
     public PaymentStatus Status { get; set; }
+    public CheckoutType CheckoutType { get; set; }
     public Detail Detail { get; set; }
 }
 

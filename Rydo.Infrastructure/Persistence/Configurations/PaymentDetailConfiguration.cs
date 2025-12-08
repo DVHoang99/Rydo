@@ -18,8 +18,10 @@ public class PaymentDetailConfiguration(CryptoHelper crypto) : IEntityTypeConfig
             .HasDefaultValueSql("NOW()");
         builder.Property(x => x.BookingId).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Status).HasDefaultValue(PaymentStatus.Pending);
+        builder.Property(x => x.CheckoutType);
 
         builder.Property(x => x.Detail)
+            .HasColumnName("Detail")
             .HasConversion(new EncryptedDetailConverter(crypto))
             .HasColumnType("text");
     }
