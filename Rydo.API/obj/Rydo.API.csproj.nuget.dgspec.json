@@ -74,6 +74,10 @@
               "target": "Package",
               "version": "[9.0.2, )"
             },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[50.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.8.0, )"
@@ -150,6 +154,14 @@
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.7, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[50.0.0, )"
             }
           },
           "imports": [
