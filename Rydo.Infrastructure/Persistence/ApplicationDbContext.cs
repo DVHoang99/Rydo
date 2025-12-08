@@ -9,6 +9,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Car> Cars => Set<Car>();
     public DbSet<CarImage> CarImages => Set<CarImage>();
+    public DbSet<Booking> Bookings => Set<Booking>();
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -23,4 +23,5 @@ public class Car
     public Point Location { get; set; } = default!;     // Geo-Spatial (longitude, latitude)
 
     public ICollection<CarImage> Images { get; set; } = new List<CarImage>();
+    public ICollection<Booking> Bookings { get; set; }
 }

@@ -24,8 +24,6 @@ public class CreateCarCommandHandler(
     GeometryFactory geometryFactory)
     : IRequestHandler<CreateCarCommand, Guid>
 {
-    // Inject to create Point correctly
-
     public async Task<Guid> Handle(CreateCarCommand request, CancellationToken cancellationToken)
     {
         var location = geometryFactory.CreatePoint(new Coordinate(request.Longitude, request.Latitude));

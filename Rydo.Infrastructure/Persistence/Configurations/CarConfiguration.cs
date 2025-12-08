@@ -4,7 +4,7 @@ using Rydo.Domain.Entities;
 
 namespace Rydo.Infrastructure.Persistence.Configurations;
 
-public class CarConfiguration: IEntityTypeConfiguration<Car>
+public class CarConfiguration : IEntityTypeConfiguration<Car>
 {
     public void Configure(EntityTypeBuilder<Car> builder)
     {

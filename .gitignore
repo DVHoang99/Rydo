@@ -1,11 +1,23 @@
-/bin/
-/obj/
-/.vs/
-/*.user
+# Ignore build outputs
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+
+# Rider / JetBrains IDE
+.idea/
 *.suo
 *.user
 *.userosscache
-*.sln.DotSettings.user
-.idea/
-/*.DotSettings.user
-.DS_Store
+*.sln.docstates
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# DotNet debug
+launchSettings.json

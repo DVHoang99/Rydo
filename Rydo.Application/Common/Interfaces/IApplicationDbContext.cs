@@ -7,6 +7,8 @@ public interface IApplicationDbContext
 {
     DbSet<Car> Cars { get; }
     DbSet<CarImage> CarImages { get; }
+    DbSet<Booking> Bookings { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    //dotnet ef migrations add AddBooking -p ../Rydo.Infrastructure -s . 
 }
