@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
 using Rydo.Application;
+using Rydo.Application.Common.Helpers;
 using Rydo.Application.Common.Interfaces;
+using Rydo.Domain.Entities;
 using Rydo.Infrastructure.Persistence;
+using Rydo.Infrastructure.Persistence.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +30,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 
-// JWT Auth + Authorization (PHẢI TRƯỚC builder.Build)
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opts =>
     {
@@ -35,13 +37,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         opts.Audience = "rydo-api";
         opts.RequireHttpsMetadata = false;
     });
-builder.Services.AddAuthorization(); // <-- thêm đúng chỗ
+builder.Services.AddAuthorization();
 
 // Geometry factory
 builder.Services.AddSingleton(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
 
 // ApplicationDbContext interface
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
+builder.Services.AddDataProtection();
+builder.Services.AddSingleton<CryptoHelper>();
+builder.Services.AddSingleton<IEntityTypeConfiguration<PaymentDetail>, PaymentDetailConfiguration>();
 
 var app = builder.Build();
 // Middleware pipeline
