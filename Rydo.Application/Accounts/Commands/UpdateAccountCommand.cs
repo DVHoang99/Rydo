@@ -45,7 +45,6 @@ public class UpdateAccountCommandHandler(IApplicationDbContext db, IPasswordHash
             user.LastName = request.LastName;
 
         await db.SaveChangesAsync(cancellationToken);
-
         return true;
     }
 }
