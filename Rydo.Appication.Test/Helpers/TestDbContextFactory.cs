@@ -29,7 +29,7 @@ public class TestDbContextFactory : IAsyncLifetime
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseNpgsql(_dbContainer.GetConnectionString(), opts =>
             {
-                opts.UseNetTopologySuite();  // nếu dùng Point geometry
+                opts.UseNetTopologySuite();
             })
             .Options;
 

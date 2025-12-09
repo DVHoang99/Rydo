@@ -8,18 +8,17 @@ public static class DatabaseCleaner
 {
     public static async Task ClearDatabase(ApplicationDbContext db)
     {
-        var tables = new[] { "PaymentDetails", "Details", "Users" };
-
-        foreach (var table in tables)
-        {
-            await db.Database.ExecuteSqlRawAsync($@"
-                DO $$
-                BEGIN
-                    IF EXISTS (SELECT FROM information_schema.tables 
-                               WHERE table_name = '{table}') THEN
-                        EXECUTE 'TRUNCATE TABLE ""{table}"" RESTART IDENTITY CASCADE';
-                    END IF;
-                END $$;");
-        }
+        await db.Database.ExecuteSqlRawAsync(@"
+            DO $$
+            DECLARE
+                table_name text;
+            BEGIN
+                FOR table_name IN 
+                    SELECT tablename FROM pg_tables WHERE schemaname = 'public'
+                LOOP
+                    EXECUTE 'TRUNCATE TABLE ' || quote_ident(table_name) || ' RESTART IDENTITY CASCADE;';
+                END LOOP;
+            END $$;
+        ");
     }
 }

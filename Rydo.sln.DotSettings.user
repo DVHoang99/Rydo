@@ -15,5 +15,6 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=aedfe1a6_002D664d_002D4a0a_002D8aea_002Db7daad73b1ce/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateCheckoutCommandHandlerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::0E477C2D-2E9D-4563-82C0-9A23048EDA60::net8.0::Rydo.Appication.Test.IntegrationTests.Accounts.Commands.RegisterCommandHandlerTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0E477C2D-2E9D-4563-82C0-9A23048EDA60::net8.0::Rydo.Appication.Test.IntegrationTests.Accounts.Commands.UpdateAccountCommandHandlerTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

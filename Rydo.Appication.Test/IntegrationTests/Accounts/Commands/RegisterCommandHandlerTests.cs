@@ -13,16 +13,15 @@ public class RegisterCommandHandlerTests : IntegrationTestBase
 {
     private readonly TestDbContextFactory _factory;
     private readonly RegisterCommandHandler _handler;
-    private readonly Mock<IPasswordHasher> _passwordHasher;
 
     public RegisterCommandHandlerTests(TestDbContextFactory factory) 
         : base(factory)
     {
         _factory = factory;
-        _passwordHasher = new Mock<IPasswordHasher>();
-        _passwordHasher.Setup(x => x.Hash(It.IsAny<string>())).Returns("hashedpwd");
+        Mock<IPasswordHasher> passwordHasher = new Mock<IPasswordHasher>();
+        passwordHasher.Setup(x => x.Hash(It.IsAny<string>())).Returns("hashedpwd");
 
-        _handler = new RegisterCommandHandler(_factory.DbContext, _passwordHasher.Object);
+        _handler = new RegisterCommandHandler(_factory.DbContext, passwordHasher.Object);
     }
 
     [Fact]
