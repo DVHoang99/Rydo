@@ -11,6 +11,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<CarImage> CarImages => Set<CarImage>();
     public DbSet<Booking> Bookings => Set<Booking>();
     public DbSet<PaymentDetail> PaymentDetails => Set<PaymentDetail>();
+    public DbSet<User> Users => Set<User>();
     
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

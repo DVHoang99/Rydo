@@ -5,6 +5,7 @@ using NetTopologySuite;
 using Rydo.Application;
 using Rydo.Application.Common.Helpers;
 using Rydo.Application.Common.Interfaces;
+using Rydo.Application.Interfaces.Password;
 using Rydo.Domain.Entities;
 using Rydo.Infrastructure.Persistence;
 using Rydo.Infrastructure.Persistence.Configurations;
@@ -44,6 +45,8 @@ builder.Services.AddSingleton(NtsGeometryServices.Instance.CreateGeometryFactory
 
 // ApplicationDbContext interface
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 
 builder.Services.AddDataProtection();
 builder.Services.AddSingleton<CryptoHelper>();
