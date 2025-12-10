@@ -15,5 +15,5 @@
 # macOS system files
 *.DS_Store
 
-**/Secrets/
-**/Secrets/*.json
+secrets/
+secrets/*.json
