@@ -11,6 +11,29 @@ namespace Rydo.API.Controllers;
 [Route("api/[controller]")]
 public class PaymentController(IMediator mediator, IConfiguration configuration) : ControllerBase
 {
+    [HttpPost("create-payment")]
+    public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request)
+    {
+        StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
+
+        var options = new PaymentIntentCreateOptions
+        {
+            Amount = (long)(request.Amount * 100),
+            Currency = "usd",
+            PaymentMethodTypes = new List<string> { "wechat_pay" }, // or "alipay", "promptpay"
+        };
+
+        var service = new PaymentIntentService();
+        var intent = await service.CreateAsync(options);
+
+        return Ok(new
+        {
+            paymentIntentId = intent.Id,
+            clientSecret = intent.ClientSecret,
+            nextAction = intent.NextAction
+        });
+    }
+    
     [HttpPost("stripe/webhook")]
     public async Task<IActionResult> StripeWebhook()
     {
