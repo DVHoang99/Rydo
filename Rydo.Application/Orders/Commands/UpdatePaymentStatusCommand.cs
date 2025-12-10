@@ -14,6 +14,20 @@ public class UpdatePaymentStatusCommandHandler(IApplicationDbContext db) : IRequ
 
     public async Task<string> Handle(UpdatePaymentStatusCommand request, CancellationToken cancellationToken)
     {
+        if (!Guid.TryParse(request.PaymentId, out var paymentGuid))
+            throw new ArgumentException("Invalid Payment Id");
+
+        var payment = await _db.PaymentDetails
+            .FirstOrDefaultAsync(x => x.Id == paymentGuid, cancellationToken);
+
+        if (payment == null)
+            return $"Payment {request.PaymentId} not found.";
+
+        // Update status
+        payment.Status = request.Status;
+
+        await _db.SaveChangesAsync(cancellationToken);
+
         return request.PaymentId;
     }
 }
