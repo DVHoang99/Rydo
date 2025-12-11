@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Rydo.Application.Common.Enums;
 using Rydo.Application.Orders.Commands;
+using Rydo.Application.Payments.Commands;
 using Stripe;
 using Stripe.Checkout;
 
@@ -11,27 +12,18 @@ namespace Rydo.API.Controllers;
 [Route("api/[controller]")]
 public class PaymentController(IMediator mediator, IConfiguration configuration) : ControllerBase
 {
-    [HttpPost("create-payment")]
-    public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request)
+    [HttpPost("create-detail")]
+    public async Task<IActionResult> CreatePaymentDetail([FromBody] CreatePaymentDetailCommand command)
     {
-        StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
-
-        var options = new PaymentIntentCreateOptions
-        {
-            Amount = (long)(request.Amount * 100),
-            Currency = "usd",
-            PaymentMethodTypes = new List<string> { "wechat_pay" }, // or "alipay", "promptpay"
-        };
-
-        var service = new PaymentIntentService();
-        var intent = await service.CreateAsync(options);
-
-        return Ok(new
-        {
-            paymentIntentId = intent.Id,
-            clientSecret = intent.ClientSecret,
-            nextAction = intent.NextAction
-        });
+        var id = await mediator.Send(command);
+        return Ok(new { PaymentDetailId = id });
+    }
+    
+    [HttpPost("create-intent")]
+    public async Task<IActionResult> CreateStripeIntent([FromBody] CreateStripePaymentIntentCommand command)
+    {
+        var result = await mediator.Send(command);
+        return Ok(result); // contains clientSecret + paymentIntentId
     }
     
     [HttpPost("stripe/webhook")]

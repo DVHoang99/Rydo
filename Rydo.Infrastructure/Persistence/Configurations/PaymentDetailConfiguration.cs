@@ -19,6 +19,21 @@ public class PaymentDetailConfiguration(CryptoHelper crypto) : IEntityTypeConfig
         builder.Property(x => x.BookingId).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Status).HasDefaultValue(PaymentStatus.Pending);
         builder.Property(x => x.CheckoutType);
+        
+        builder.Property(x => x.StripePaymentIntentId)
+            .HasMaxLength(200);
+
+        builder.Property(x => x.StripePaymentMethodId)
+            .HasMaxLength(200);
+
+        builder.Property(x => x.PaidAmount)
+            .HasPrecision(18, 2);
+
+        builder.Property(x => x.PaidAt);
+
+        builder.Property(x => x.Currency)
+            .HasMaxLength(10)
+            .IsRequired();
 
         builder.Property(x => x.Detail)
             .HasColumnName("Detail")

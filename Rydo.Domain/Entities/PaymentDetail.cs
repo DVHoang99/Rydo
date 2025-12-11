@@ -9,6 +9,12 @@ public class PaymentDetail
     public DateTime Created { get; set; }
     public PaymentStatus Status { get; set; }
     public CheckoutType CheckoutType { get; set; }
+    public string? StripePaymentIntentId { get; set; }
+    public string? StripePaymentMethodId { get; set; }
+
+    public decimal? PaidAmount { get; set; }
+    public DateTime? PaidAt { get; set; }
+    public string Currency { get; set; } = "USD";
     public Detail Detail { get; set; }
 }
 

@@ -11,4 +11,5 @@ public class Booking
     public string Status { get; set; } = "Pending";
 
     public Car Car { get; set; }
+    public List<PaymentDetail> PaymentDetails { get; set; }
 }
