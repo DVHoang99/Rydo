@@ -67,4 +67,13 @@ public class PaymentController(IMediator mediator, IConfiguration configuration)
 
         return Ok();
     }
+    
+    [HttpPost("Offline")]
+    public async Task<IActionResult> CheckoutOffline([FromBody] CreatePaymentDetailCommand command)
+    {
+        
+        var createPaymentDetailCommand = new CreatePaymentDetailCommand(Guid.NewGuid(), CheckoutType.Offline);
+
+        return Ok();
+    }
 }
