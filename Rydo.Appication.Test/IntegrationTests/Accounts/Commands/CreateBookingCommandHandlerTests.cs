@@ -1,7 +1,9 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Rydo.Appication.Test.Helpers;
 using Rydo.Application.Cars.Commands;
+using Rydo.Application.Interfaces.Email;
 using Rydo.Domain.Entities;
 using Xunit;
 
@@ -11,12 +13,14 @@ public class CreateBookingCommandHandlerTests : IntegrationTestBase
 {
     private readonly TestDbContextFactory _factory;
     private readonly CreateBookingCommandHandler _handler;
+    private readonly IEmailService _emailService;
 
-    public CreateBookingCommandHandlerTests(TestDbContextFactory factory)
+    public CreateBookingCommandHandlerTests(TestDbContextFactory factory, IEmailService emailService)
         : base(factory)
     {
         _factory = factory;
-        _handler = new CreateBookingCommandHandler(factory.DbContext);
+        _emailService = emailService;
+        _handler = new CreateBookingCommandHandler(factory.DbContext, _emailService);
     }
     
     
@@ -25,7 +29,7 @@ public class CreateBookingCommandHandlerTests : IntegrationTestBase
     {
         // Arrange
         var carId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
+        var userId = Guid.NewGuid().ToString();
 
         var command = new CreateBookingCommand
         {
@@ -49,7 +53,7 @@ public class CreateBookingCommandHandlerTests : IntegrationTestBase
     {
         // Arrange
         var carId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
+        var userId = Guid.NewGuid().ToString();
 
         // existing booking
         _factory.DbContext.Bookings.Add(new Booking
@@ -67,7 +71,7 @@ public class CreateBookingCommandHandlerTests : IntegrationTestBase
         var command = new CreateBookingCommand
         {
             CarId = carId,
-            UserId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
             StartDate = new DateTime(2025, 03, 11),
             EndDate = new DateTime(2025, 03, 13)
         };
