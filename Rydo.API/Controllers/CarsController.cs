@@ -18,18 +18,20 @@ public class CarsController(IMediator mediator) : ControllerBase
         return Ok(new { id });
     }
     
-    [HttpGet("search")]
+    [HttpGet]
     //[Authorize]
-    public async Task<IActionResult> Search(
+    public async Task<IActionResult> GetAll(
         [FromQuery] double? latitude,
         [FromQuery] double? longitude,
         [FromQuery] double? maxDistanceKm,
         [FromQuery] decimal? minPrice,
         [FromQuery] decimal? maxPrice,
         [FromQuery] string? brand,
-        [FromQuery] string? model)
+        [FromQuery] string? model,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
     {
-        var query = new SearchCarsQuery(latitude, longitude, maxDistanceKm, minPrice, maxPrice, brand, model);
+        var query = new SearchCarsQuery(latitude, longitude, maxDistanceKm, minPrice, maxPrice, brand, model, page, pageSize);
         var result = await mediator.Send(query);
         return Ok(result);
     }
@@ -39,14 +41,6 @@ public class CarsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetDetail(Guid id)
     {
         var result = await mediator.Send(new GetCarDetailQuery(id));
-        return Ok(result);
-    }
-    
-    [HttpGet("/{id}/availability")]
-    //[Authorize]
-    public async Task<IActionResult> GetCaravAilability(Guid id, DateTime from, DateTime to)
-    {
-        var result = await mediator.Send(new GetCarAvailabilityQuery(id, from, to));
         return Ok(result);
     }
 }

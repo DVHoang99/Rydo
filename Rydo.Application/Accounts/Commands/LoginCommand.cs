@@ -11,13 +11,19 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace Rydo.Application.Accounts.Commands;
 
-public class LoginCommand(string phoneNumber, string password) : IRequest<string>
+public class LoginCommand(string phoneNumber, string password) : IRequest<LoginResponse>
 {
     public string PhoneNumber { get; } = phoneNumber;
     public string Password { get; } = password;
 }
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+public class LoginResponse
+{
+    public string Token { get; set; } = String.Empty;
+    public DateTime ExpiredAt { get; set; }
+}
+
+public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
     private readonly IApplicationDbContext _db;
     private readonly IConfiguration _config;
@@ -30,7 +36,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         var user = await _db.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber, cancellationToken);
         if (user == null) throw new Exception("Invalid credentials");
@@ -45,7 +51,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
             new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"] ?? string.Empty));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
@@ -56,6 +62,10 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
             signingCredentials: creds
         );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return new LoginResponse
+        {
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
+            ExpiredAt = token.ValidTo
+        };
     }
 }

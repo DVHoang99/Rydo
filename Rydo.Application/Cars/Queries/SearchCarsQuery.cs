@@ -15,6 +15,11 @@ public record CarDto(
     double Longitude
 );
 
+public record CarDtoWrapper(
+    int Total,
+    IEnumerable<CarDto> Items
+);
+
 public record SearchCarsQuery(
     double? Latitude,
     double? Longitude,
@@ -22,10 +27,12 @@ public record SearchCarsQuery(
     decimal? MinPrice,
     decimal? MaxPrice,
     string? Brand,
-    string? Model
-) : IRequest<List<CarDto>>;
+    string? Model,
+    int Page,
+    int PageSize
+) : IRequest<CarDtoWrapper>;
 
-public class SearchCarsQueryHandler : IRequestHandler<SearchCarsQuery, List<CarDto>>
+public class SearchCarsQueryHandler : IRequestHandler<SearchCarsQuery, CarDtoWrapper>
 {
     private readonly IApplicationDbContext _context;
     private readonly GeometryFactory _geometryFactory;
@@ -36,7 +43,7 @@ public class SearchCarsQueryHandler : IRequestHandler<SearchCarsQuery, List<CarD
         _geometryFactory = geometryFactory;
     }
 
-    public async Task<List<CarDto>> Handle(SearchCarsQuery request, CancellationToken cancellationToken)
+    public async Task<CarDtoWrapper> Handle(SearchCarsQuery request, CancellationToken cancellationToken)
     {
         var query = _context.Cars.AsQueryable();
 
@@ -63,7 +70,10 @@ public class SearchCarsQueryHandler : IRequestHandler<SearchCarsQuery, List<CarD
         if (!string.IsNullOrEmpty(request.Model))
             query = query.Where(c => c.Model.ToLower() == request.Model.ToLower());
 
-        return await query
+        var total = await query.CountAsync(cancellationToken);
+        var response = await query
+            .Skip(request.Page * request.PageSize)
+            .Take(request.PageSize)
             .Select(c => new CarDto(
                 c.Id,
                 c.OwnerId,
@@ -74,5 +84,6 @@ public class SearchCarsQueryHandler : IRequestHandler<SearchCarsQuery, List<CarD
                 c.Location.X  // longitude
             ))
             .ToListAsync(cancellationToken);
+        return new CarDtoWrapper(total, response);
     }
 }
